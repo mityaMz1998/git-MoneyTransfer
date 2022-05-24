@@ -1,0 +1,68 @@
+﻿<Window x:Class="WpfMoneyTransfer.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMoneyTransfer.Views"
+        mc:Ignorable="d"
+        Title="Перевод денежных средств" Height="250" Width="500">
+    <Window.Resources>
+
+        <Style x:Key="menuItem" TargetType="MenuItem">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5DE85D" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Button.Background" Value="Black" />
+                <Setter Property="Button.Foreground" Value="White" />
+                <Setter Property="Button.HorizontalAlignment" Value="Left"/>
+                <Setter Property="Button.VerticalAlignment" Value="Top"/>
+                <Setter Property="Button.Height" Value="25"/>
+                <Setter Property="Button.Width" Value="120"/>
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Background="{x:Null}">
+            <MenuItem Header="Меню" Foreground="White" Style="{StaticResource menuItem}">
+                <MenuItem Command="{Binding LoadDb}" Background="Black" Header="Загрузить БД"></MenuItem>
+                <MenuItem Command="{Binding OpenPayments}" Background="Black" Header="Платежи"></MenuItem>
+                <MenuItem Command="{Binding ExitCommand}" Background="Black" Header="Выход"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <ListView Name="listClientsAndCards" Grid.Row="1" Width="460" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                  Margin="20,10,0,0" Background="{x:Null}" Foreground="White">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Surname}" Width="70">Фамилия</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="60">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=MiddleName}" Width="70">Отчетсво</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DateOfBirth}" Width="90">Дата рождения</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=NumberOfPhone}" Width="110">Номер телефона</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Command="{Binding AddClient}" Content="Добавить" Grid.Row="1" Margin="30,180,0,0">
+        </Button>
+        <Button Command="{Binding EditClient}" Content="Редактировать" Grid.Row="1" Margin="180,180,0,0">
+        </Button>
+        <Button Command="{Binding RemoveClient}" Content="Удалить" Grid.Row="1" Margin="330,180,0,0">
+        </Button>
+
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,2" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FF5AFD29" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+    </Grid>
+</Window>
