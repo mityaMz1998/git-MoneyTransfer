@@ -1,2 +1,2 @@
-Приложение предназначено для выполнения перевода счетов между клиентами.
-В приложении используется паттерн MVVM, а также технология ADO.NET.
+The application is designed to perform the transfer of accounts between clients. 
+The application uses the MVVM pattern, as well as technology ADO.NET.
