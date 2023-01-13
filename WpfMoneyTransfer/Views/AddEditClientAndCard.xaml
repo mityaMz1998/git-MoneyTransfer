@@ -69,20 +69,20 @@
         <TextBox Name="txtMiddleName" Margin="10,130,0,0">
         </TextBox>
         <xctk:MaskedTextBox Name="txtNumberOfPhone" Mask="0\(000\)000-00-00" Margin="10,180,0,0"/>
-        <Label Content="Фамилия:" Margin="5,5,0,0"/>
-        <Label Content="Имя:" Margin="5,55,0,0"/>
-        <Label Content="Отчество:" Margin="5,105,0,0"/>
-        <Label Content="Введите номер телефона:" Margin="5,155,0,0"/>
-        <Label Content="Дата рождения:" Margin="165,5,0,0"/>
+        <Label Content="Surname:" Margin="5,5,0,0"/>
+        <Label Content="Name:" Margin="5,55,0,0"/>
+        <Label Content="Middle name:" Margin="5,105,0,0"/>
+        <Label Content="Input phone number:" Margin="5,155,0,0"/>
+        <Label Content="Date of birth:" Margin="165,5,0,0"/>
         <Calendar Name="calendarDateOfBirth" Background="#FF429D27" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,30,0,0"/>
-        <Label Content="Список карточек:" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
+        <Label Content="List of cards:" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
         <ListView Background="{x:Null}" Foreground="White" Name="listCard" Grid.Column="1" Height="80" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CardNumber}" Width="80">Номер карты</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Width="70">Срок действия</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Balance}" Width="50">Баланс</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=BindingPhone}" Width="90">Привязка к телефону</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CardNumber}" Width="80">Card number</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Width="70">Expiration date</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Balance}" Width="50">Balance</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BindingPhone}" Width="90">Binding to the phone</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -90,15 +90,15 @@
         <xctk:MaskedTextBox  Grid.Column="1" Name="txtExpirationDate" Mask="00\/00" Margin="170,140,0,0"/>
         <TextBox Grid.Column="1" Name="txtBalance" Margin="10,190,0,0">
         </TextBox>
-        <Label Content="Номер карты:" Grid.Column="1" Margin="5,115,0,0"/>
-        <Label Content="Баланс:" Grid.Column="1" Margin="5,165,0,0"/>
-        <Label Content="Срок действия:" Grid.Column="1" Margin="165,115,0,0"/>
-        <CheckBox Grid.Column="1" Name="chkBindingPhone" Margin="170,190,0,50" Content="Привязка к телефону:" Foreground="White"/>
-        <Button Command="{Binding AddCard}" Content="Добавить" Grid.Column="1" Width="80" Height="25" Margin="20,230,0,0"/>
-        <Button Command="{Binding EditCard}" Content="Редактировать" Grid.Column="1" Width="100" Height="25" Margin="115,230,0,0"/>
-        <Button Command="{Binding SaveChangesCard}" Content="Сохранить изменения" Grid.Column="1" Width="140" Height="25" Margin="100,260,0,0"/>
-        <Button Command="{Binding RemoveCard}" Content="Удалить" Grid.Column="1" Width="80" Height="25" Margin="230,230,0,0"/>
-        <Button Command="{Binding SaveClientAndCard}" Content="Сохранить" Grid.Row="1" Width="100" Height="25" Margin="230,5,0,0"/>
-        <Button Command="{Binding CancelCommand}" Content="Отмена" Grid.Row="1" Grid.Column="1" Width="100" Height="25" Margin="10,5,0,0"/>
+        <Label Content="Card number:" Grid.Column="1" Margin="5,115,0,0"/>
+        <Label Content="Balance:" Grid.Column="1" Margin="5,165,0,0"/>
+        <Label Content="Expiration date:" Grid.Column="1" Margin="165,115,0,0"/>
+        <CheckBox Grid.Column="1" Name="chkBindingPhone" Margin="170,190,0,50" Content="Binding to the phone:" Foreground="White"/>
+        <Button Command="{Binding AddCard}" Content="Add" Grid.Column="1" Width="80" Height="25" Margin="20,230,0,0"/>
+        <Button Command="{Binding EditCard}" Content="Edit" Grid.Column="1" Width="100" Height="25" Margin="115,230,0,0"/>
+        <Button Command="{Binding SaveChangesCard}" Content="Save changes" Grid.Column="1" Width="140" Height="25" Margin="100,260,0,0"/>
+        <Button Command="{Binding RemoveCard}" Content="Delete" Grid.Column="1" Width="80" Height="25" Margin="230,230,0,0"/>
+        <Button Command="{Binding SaveClientAndCard}" Content="Save" Grid.Row="1" Width="100" Height="25" Margin="230,5,0,0"/>
+        <Button Command="{Binding CancelCommand}" Content="Cancel" Grid.Row="1" Grid.Column="1" Width="100" Height="25" Margin="10,5,0,0"/>
     </Grid>
 </Window>
