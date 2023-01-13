@@ -53,23 +53,23 @@
     </Window.Resources>
     <Grid Background="{StaticResource gradientBrush}">
         <Grid Name="gridFrom">
-            <CheckBox Command="{Binding Switch}" Name="checkFrom" Content="По номеру карты" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0"/>
-            <Label Content="Выберите номер отправителя:" Margin="5,45,0,0"/>
+            <CheckBox Command="{Binding Switch}" Name="checkFrom" Content="By card number" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0"/>
+            <Label Content="Select the sender's number:" Margin="5,45,0,0"/>
             <xctk:MaskedTextBox Mask="0\(000\)000-00-00" Name="mskTxtFromPhoneNumber" Margin="10,70,0,0"/>
             <TextBox Name="txtFromCard" Width="200" Margin="10,110,0,0" IsEnabled="False"/>
-            <Button Command="{Binding LostFocusButtonSearch}" Name="btnSearchFrom" Width="60" Content="Искать" Margin="150,70,0,0"/>
+            <Button Command="{Binding LostFocusButtonSearch}" Name="btnSearchFrom" Width="60" Content="Search" Margin="150,70,0,0"/>
         </Grid>
         <Grid Name="gridTo">
-            <CheckBox Command="{Binding Switch}" Name="checkTo" Content="По номеру карты" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="240,30,0,0"/>
+            <CheckBox Command="{Binding Switch}" Name="checkTo" Content="By card number" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="240,30,0,0"/>
             <xctk:MaskedTextBox Mask="0\(000\)000-00-00" Name="mskTxtToPhoneNumber" Margin="240,70,0,0"/>
             <TextBox Name="txtToCard" Width="200" Margin="240,110,0,0" IsEnabled="False"/>
-            <Label Content="Выберите номер получателя:" Margin="235,45,0,0"/>
-            <Button Command="{Binding LostFocusButtonSearch}" Name="btnSearchTo" Width="60" Content="Искать" Margin="380,70,0,0"/>
+            <Label Content="Select the sender's number:" Margin="235,45,0,0"/>
+            <Button Command="{Binding LostFocusButtonSearch}" Name="btnSearchTo" Width="60" Content="Search" Margin="380,70,0,0"/>
         </Grid>
-        <Label Content="Сумма платежа:" Margin="5,135,0,0"/>
-        <Label Content="Способ оплаты:" Margin="5,5,0,0"/>
+        <Label Content="Payment amount:" Margin="5,135,0,0"/>
+        <Label Content="Payment method:" Margin="5,5,0,0"/>
         <TextBox Name="txtSumTransfer" Margin="10,160,0,0"/>
-        <Button Command="{Binding AcceptPayment}" Content="Выполнить" Margin="100,200,0,0"/>
-        <Button Command="{Binding CancelPayment}" Content="Отмена" Margin="240,200,0,0"/>
+        <Button Command="{Binding AcceptPayment}" Content="Accept" Margin="100,200,0,0"/>
+        <Button Command="{Binding CancelPayment}" Content="Cancel" Margin="240,200,0,0"/>
     </Grid>
 </Window>
