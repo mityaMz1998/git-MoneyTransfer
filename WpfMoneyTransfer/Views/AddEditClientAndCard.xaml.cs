@@ -6,7 +6,7 @@ using WpfMoneyTransfer.ViewModels;
 namespace WpfMoneyTransfer.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AddEditClientAndCard.xaml
+    /// Interaction logic for the form AddEditClientAndCard.xaml
     /// </summary>
     public partial class AddEditClientAndCard : Window
     {
