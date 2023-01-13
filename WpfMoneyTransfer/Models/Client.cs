@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace WpfMoneyTransfer.Models
 {
+    /// <summary>
+    /// Client
+    /// </summary>
     public class Client : INotifyPropertyChanged
     {
         private string _surname;
