@@ -14,6 +14,9 @@ using WpfMoneyTransfer.Views;
 
 namespace WpfMoneyTransfer.ViewModels
 {
+    /// <summary>
+    /// Сlass for adding, editing, and deleting clients and their cards
+    /// </summary>
     public class AddEditClientAndCardViewModel : INotifyPropertyChanged
     {
         public static AddEditClientAndCard addEditClientAndCard;
@@ -53,11 +56,19 @@ namespace WpfMoneyTransfer.ViewModels
             RemoveCard = new RoutedCommand("RemoveCard", typeof(AddEditClientAndCard));
             SaveClientAndCard = new RoutedCommand("SaveClientAndCard", typeof(MainWindow));
             CancelCommand = new RoutedCommand("CancelCommand", typeof(MainWindow));
-        }       
+        }
+
+        /// <summary>
+        /// Method for autoincrement of a new record
+        /// </summary>
         private static int GetIDCard()
         {
             return Cards.Count() > 0 ? Cards.Max<Card>(x => x.ID) + 1 : 1;
         }
+
+        /// <summary>
+        /// Method for clearing card elements
+        /// </summary>
         private static void ClearCardsElements()
         {
             addEditClientAndCard.txtCardNumber.Clear();
@@ -65,6 +76,10 @@ namespace WpfMoneyTransfer.ViewModels
             addEditClientAndCard.txtBalance.Clear();
             addEditClientAndCard.chkBindingPhone.IsChecked = false;
         }
+
+        /// <summary>
+        /// Method for clearing all elements int the form
+        /// </summary>
         private static void ClearAllElements()
         {
             addEditClientAndCard.txtSurname.Clear();
@@ -74,7 +89,11 @@ namespace WpfMoneyTransfer.ViewModels
             addEditClientAndCard.txtNumberOfPhone.Clear();
             Cards.Clear();
         }
-        public static void AddCard_Executed(object sender, ExecutedRoutedEventArgs e) // команда для добавления новой карточки
+
+        /// <summary>
+        /// Command to add a new card
+        /// </summary>
+        public static void AddCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Card c = new Card(GetIDCard(), long.Parse(addEditClientAndCard.txtCardNumber.Text.Replace(" ", "")), addEditClientAndCard.txtExpirationDate.Text,
                                 decimal.Parse(addEditClientAndCard.txtBalance.Text), addEditClientAndCard.chkBindingPhone.IsChecked.Value, 0 , false);
@@ -87,7 +106,11 @@ namespace WpfMoneyTransfer.ViewModels
         {
             e.CanExecute = true;
         }
-        public static void EditCard_Executed(object sender, ExecutedRoutedEventArgs e) // команда обновления (редактирования) карточки
+
+        /// <summary>
+        /// Command for update (edit) card
+        /// </summary>
+        public static void EditCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Card c = (sender as AddEditClientAndCard).listCard.SelectedItem as Card;
             if (c != null)
@@ -111,7 +134,11 @@ namespace WpfMoneyTransfer.ViewModels
         {
             e.CanExecute = (sender as AddEditClientAndCard).listCard.SelectedItem != null;
         }
-        public static void SaveChangesCard_Executed(object sender, ExecutedRoutedEventArgs e) // команда для сохранения изменений карточки
+
+        /// <summary>
+        /// Command to save card changes
+        /// </summary>
+        public static void SaveChangesCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             int ID = (addEditClientAndCard.listCard.SelectedItems[0] as Card).ID;
             (line as Card).CardNumber = long.Parse(addEditClientAndCard.txtCardNumber.Text.Replace(" ", ""));
@@ -130,12 +157,16 @@ namespace WpfMoneyTransfer.ViewModels
             if (flgEdit == true)
                 e.CanExecute = true;
         }
-        public static void RemoveCard_Executed(object sender, ExecutedRoutedEventArgs e) // команда для удаления карточки
+
+        /// <summary>
+        /// Command to delete the card
+        /// </summary>
+        public static void RemoveCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (addEditClientAndCard.listCard.Items.Count != 0)
             {
-                var res = MessageBox.Show("Вы действительно хотите удалить эту карточку?",
-                                          "Удалить объект", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var res = MessageBox.Show("Do you really want to delete this card?",
+                                          "Delete object", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
                     var line = addEditClientAndCard.listCard.SelectedItems[0];
@@ -151,7 +182,11 @@ namespace WpfMoneyTransfer.ViewModels
         {
             e.CanExecute = (sender as AddEditClientAndCard).listCard.SelectedItem != null;
         }
-        public static void SaveClientAndCard_Executed(object sender, ExecutedRoutedEventArgs e) // команда для сохранения данных клиента и его карточек
+
+        /// <summary>
+        /// Command to save the client's data and his cards
+        /// </summary>
+        public static void SaveClientAndCard_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (addEditClientAndCard.flag)
             {
@@ -212,7 +247,11 @@ namespace WpfMoneyTransfer.ViewModels
             !String.IsNullOrEmpty((sender as AddEditClientAndCard).txtMiddleName.Text) && (sender as AddEditClientAndCard).calendarDateOfBirth.SelectedDate != null &&
             !String.IsNullOrEmpty((sender as AddEditClientAndCard).txtNumberOfPhone.Text) && Cards.Count != 0;
         }
-        public static void CancelCommand_Executed(object sender, ExecutedRoutedEventArgs e) // команда для отмены (закрытия формы)
+
+        /// <summary>
+        /// Command to cancel (close the form)
+        /// </summary>
+        public static void CancelCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             (sender as AddEditClientAndCard).Close();
             Cards.Clear();
@@ -229,7 +268,10 @@ namespace WpfMoneyTransfer.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public static void SP_AddCard(long cardNumber, string expiretionDate, decimal balance, bool bindingPhone, int clientId) // хранимая процедура, предназначенная для добавления карточки
+        /// <summary>
+        /// Stored procedure for adding a card
+        /// </summary>
+        public static void SP_AddCard(long cardNumber, string expiretionDate, decimal balance, bool bindingPhone, int clientId)
         {
             string sqlAddCard = "SP_AddCard";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -270,7 +312,11 @@ namespace WpfMoneyTransfer.ViewModels
                 var result = command.ExecuteNonQuery();
             }
         }
-        public static void SP_EditCard(long cardNumber, string expirationDate, decimal balance, bool bindingPhone, int clientId, int Id) // хранимая процедура, предназначенная дляобновления (редактирования) карточки
+
+        /// <summary>
+        /// Stored procedure designed to update (edit) the card
+        /// </summary>
+        public static void SP_EditCard(long cardNumber, string expirationDate, decimal balance, bool bindingPhone, int clientId, int Id)
         {
             string sqlEditCard = "SP_EditCard";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -317,7 +363,11 @@ namespace WpfMoneyTransfer.ViewModels
                 var result = command.ExecuteNonQuery();
             }
         }
-        public static void SP_RemoveCard(int clientId) // хранимая процедура, предназначенная для удаления карточки
+
+        /// <summary>
+        /// Stored procedure designed to delete a card
+        /// </summary>
+        public static void SP_RemoveCard(int clientId)
         {
             string sqlRemoveCard = "SP_RemoveCard";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -334,7 +384,11 @@ namespace WpfMoneyTransfer.ViewModels
                 var result = command.ExecuteNonQuery();
             }
         }
-        public static void SP_AddClient(string surname, string name, string middleName, DateTime dateOfBirth, string numberOfPhone) // хранимая процедура, предназначенная для добавления клиента
+
+        /// <summary>
+        /// Stored procedure designed to add a client
+        /// </summary>
+        public static void SP_AddClient(string surname, string name, string middleName, DateTime dateOfBirth, string numberOfPhone)
         {
             string sqlAddClient = "SP_AddClient";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -383,7 +437,11 @@ namespace WpfMoneyTransfer.ViewModels
                 ClientAddId = (int)IdParam.Value;
             }
         }
-        public static void SP_EditClient(string surname, string name, string middleName, DateTime dateOfBirth, string numberOfPhone, int Id) // хранимая процедура, предназначенная для обновления (редактирования) клиента
+
+        /// <summary>
+        /// Stored procedure designed to update (edit) the client
+        /// </summary>
+        public static void SP_EditClient(string surname, string name, string middleName, DateTime dateOfBirth, string numberOfPhone, int Id)
         {
             string sqlEditClient = "SP_EditClient";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -431,7 +489,11 @@ namespace WpfMoneyTransfer.ViewModels
                 ClientEditId = (int)IdParam.Value;
             }
         }
-        public static void SP_RemoveClient(int Id) // хранимая процедура, предназначенная для удаления клиента
+
+        /// <summary>
+        /// Stored procedure designed to delete a client
+        /// </summary>
+        public static void SP_RemoveClient(int Id)
         {
             string sqlRemoveClient = "SP_RemoveClient";
             using (SqlConnection connection = new SqlConnection(connectionString))
