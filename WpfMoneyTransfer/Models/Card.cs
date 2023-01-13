@@ -3,6 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace WpfMoneyTransfer.Models
 {
+    /// <summary>
+    /// Card
+    /// </summary>
     public class Card : INotifyPropertyChanged
     {
         private long _cardNumber;
@@ -10,7 +13,7 @@ namespace WpfMoneyTransfer.Models
         private decimal _balance;
         private bool _bindingPhone;
         private int _clientId;
-        public bool _inSQL; // специальная переменная, обозначающая наличие записи в SQL Server (true - есть запись в базе, false - новая запись)
+        public bool _inSQL; // a special variable indicating the presence of an entry in SQL Server (true - there is an entry in the database, false - a new entry)
         public Card(int id, long cardNumber, string expirationDate, decimal balance, bool bindingPhone, int clientId, bool inSQL)
         {
             ID = id;
