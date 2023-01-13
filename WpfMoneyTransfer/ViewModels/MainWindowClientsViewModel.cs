@@ -10,6 +10,9 @@ using System.Configuration;
 
 namespace WpfMoneyTransfer.Views
 {
+    /// <summary>
+    /// Main form for adding, deleting and editing clients
+    /// </summary>
     public class MainWindowClientsViewModel
     {
         public static MainWindow mw;
@@ -41,7 +44,11 @@ namespace WpfMoneyTransfer.Views
             EditClient = new RoutedCommand("EditClient", typeof(MainWindow));
             RemoveClient = new RoutedCommand("RemoveClient", typeof(MainWindow));           
         }
-        public static void AddClient_Executed(object sender, ExecutedRoutedEventArgs e) // команда для открытия формы добавления клиентов и карточек
+
+        /// <summary>
+        /// Сommand to open the form for adding clients and cards
+        /// </summary>
+        public static void AddClient_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             AddEditClientAndCard addEditClientAndCard = new AddEditClientAndCard(false);
             addEditClientAndCard.Owner = mw;
@@ -51,7 +58,11 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = true;
         }
-        public static void EditClient_Executed(object sender, ExecutedRoutedEventArgs e) // команда для открытия формы обновления (редактирования) клиентов и карточек
+
+        /// <summary>
+        /// Сommand to open the form for updating (editing) clients and cards
+        /// </summary>
+        public static void EditClient_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Client cl = (sender as MainWindow).listClientsAndCards.SelectedItem as Client;
             if (cl != null)
@@ -65,12 +76,16 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = (sender as MainWindow).listClientsAndCards.SelectedItem != null;
         }
-        public static void RemoveClient_Executed(object sender, ExecutedRoutedEventArgs e) // команда для удаления клента из списка
+
+        /// <summary>
+        /// Сommand to remove a client from the list
+        /// </summary>
+        public static void RemoveClient_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (mw.listClientsAndCards.Items.Count != 0)
             {
-                var res = MessageBox.Show("Вы действительно хотите удалить этого клиента?",
-                                          "Удалить объект", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var res = MessageBox.Show("Do you really want to delete this client?",
+                                          "Delete object", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
                     AddEditClientAndCardViewModel.SP_RemoveClient((mw.listClientsAndCards.SelectedItems[0] as Client).ID);
@@ -89,7 +104,11 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = (sender as MainWindow).listClientsAndCards.SelectedItem != null;
         }
-        public static void LoadDb_Executed(object sender, ExecutedRoutedEventArgs e) // команда для загрузки таблицы клиентов в список
+
+        /// <summary>
+        /// Command to load the client table into the list
+        /// </summary>
+        public static void LoadDb_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string sql = "SELECT * FROM Clients";
             clientsTable = new DataTable();
@@ -123,7 +142,11 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = true;
         }
-        public static void OpenPayments_Executed(object sender, ExecutedRoutedEventArgs e) // команда для открытия формы платежей
+
+        /// <summary>
+        /// Command to open the payment form
+        /// </summary>
+        public static void OpenPayments_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Payments payments = new Payments();
             payments.Owner = mw;
@@ -133,7 +156,11 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = true;
         }
-        public static void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e) // команда для закрытия формы
+
+        /// <summary>
+        /// Command to close the payment form
+        /// </summary>
+        public static void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             (sender as MainWindow).Close();
         }
@@ -141,7 +168,11 @@ namespace WpfMoneyTransfer.Views
         {
             e.CanExecute = true;
         }
-        public static void SP_FindId(int clientId) // хранимая процедура, предназначенная для вывода карточных данных указанного клиента
+
+        /// <summary>
+        /// Stored procedure designed to output the card data of the specified client
+        /// </summary>
+        public static void SP_FindId(int clientId)
         {
             string sql = "SELECT c.Id,CardNumber,ExpirationDate,Balance,BindingPhone,c.ClientId FROM Clients as cl " +
                          "INNER JOIN Cards as c on (cl.Id = c.ClientId) WHERE cl.Id =" + clientId;
