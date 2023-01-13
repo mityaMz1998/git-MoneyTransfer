@@ -1,7 +1,7 @@
--- подключение к базе данных
+-- connecting to the database
 Use moneytransfer
 
--- создание таблицы карточек
+-- creating a cards table
 CREATE TABLE Cards
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -12,7 +12,7 @@ CREATE TABLE Cards
 	ClientId INT NOT NULL,
     FOREIGN KEY (ClientId) REFERENCES Clients (Id) ON DELETE CASCADE
 );
--- создание таблицы клиентов
+-- creating a clients table
 CREATE TABLE Clients
 (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -23,41 +23,41 @@ CREATE TABLE Clients
 	NumberOfPhone nvarchar(30) NOT NULL
 );
 
--- вывод таблиц клиентов и карточек
+-- output of customer tables and cards
 Select*From Clients
 Select*From Cards
 
--- Хранимая процедура, предназначенная для выполнения перевода денежных средств
+-- A stored procedure designed to perform a money transfer
 Create procedure SP_TransCardNumber
 @from bigint,
 @to bigint,
 @sum money
 as 
 BEGIN TRY
-   --Начало транзакции
+   --Start of the transaction
    BEGIN TRANSACTION
-   --Инструкция 1
+   --Instruction 1
    UPDATE Cards SET Balance = Balance - @sum
    WHERE CardNumber = @from;
-   --Инструкция 2
+   --Instruction 2
    UPDATE Cards SET Balance = Balance + @sum
    WHERE CardNumber = @to;
    END TRY
    BEGIN CATCH
-      --В случае непредвиденной ошибки
-      --Откат транзакции
+      --In case of an unexpected error
+      --Rolling back a transaction
       ROLLBACK TRANSACTION
-      --Выводим сообщение об ошибке
+      --We output an error message
       SELECT ERROR_NUMBER() AS [Номер ошибки],
              ERROR_MESSAGE() AS [Описание ошибки]
-   --Прекращаем выполнение инструкции
+   --We stop executing the instructions
    RETURN
    END CATCH
-   --Если все хорошо. Сохраняем все изменения
+   --If everything is fine, save all the changes
    COMMIT TRANSACTION
    GO
 
--- Хранимая процедура, предназначенная для добавления клиента
+-- A stored procedure designed to add a client
 Create procedure SP_AddClient
 @surname varchar(30),
 @name varchar(30),
@@ -73,7 +73,7 @@ Select @Id = @@Identity
 End
 Go
 
--- Хранимая процедура, предназначенная для обновления (редактирования) клиента
+-- A stored procedure designed to update (edit) the client
 Create procedure SP_EditClient
 @surname nvarchar(30),
 @name nvarchar(30),
@@ -90,7 +90,7 @@ Where Id = @Id
 End
 Go
 
--- Хранимая процедура, предназначенная для удаления клиента
+-- A stored procedure designed to delete a client
 Create procedure SP_RemoveClient
 @Id int
 As
@@ -99,7 +99,7 @@ Delete Clients where Id = @Id
 End
 Go
 
--- Хранимая процедура, предназначенная для добавления карты
+-- A stored procedure designed to add a card
 Create procedure SP_AddCard
 @cardNumber bigint,
 @expirationDate nvarchar(10),
@@ -113,7 +113,7 @@ Values (@cardNumber,@expirationDate,@balance,@bindingPhone,@clientId)
 End
 Go
 
--- Хранимая процедура, предназначенная для обновления (редактирования) карты
+-- A stored procedure designed to update (edit) the card
 Create procedure SP_EditCard
 @cardNumber bigint,
 @expirationDate nvarchar(10),
@@ -130,7 +130,7 @@ Where Id = @Id
 End
 Go
 
--- Хранимая процедура, предназначенная для удаления карточки
+-- A stored procedure designed to delete a card
 Create procedure SP_RemoveCard
 @clientId int
 As
@@ -140,7 +140,7 @@ Where Id = @clientId
 End
 Go
 
--- Хранимая процедура, предназначенная для поиска и вывода номера карты по номеру телефона
+-- A stored procedure designed to search for and output a card number by phone number
 Create procedure SP_GetCardNumder1
 @number nvarchar(30),
 @isCard bit,
@@ -159,7 +159,7 @@ Where CardNumber = Replace(@number,' ','')
 End
 Go
 
--- Хранимая процедура, предназначенная для вывода карточных данных указанного клиента
+-- A stored procedure designed to output the card data of the specified client
 Create procedure SP_FindId
 @clientId int
 As
