@@ -7,6 +7,9 @@ using System.Data;
 
 namespace WpfMoneyTransfer.ViewModelы
 {
+    /// <summary>
+    /// Class to сhoosing a payment method
+    /// </summary>
     public class TransContragentViewModel
     {
         CheckBox _chSign;
@@ -41,7 +44,11 @@ namespace WpfMoneyTransfer.ViewModelы
             Switch = new RoutedCommand("Switch", typeof(CheckBox));
             LostFocusButtonSearch = new RoutedCommand("LostFocusButtonSeach", typeof(Button));
         }
-        public static void Switch_Executed(object sender, ExecutedRoutedEventArgs e) // команда для выбора способа платежа (номером карты или номером телефона)
+
+        /// <summary>
+        /// Command to select the payment method (card number or phone number)
+        /// </summary>
+        public static void Switch_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             TransContragentViewModel tr = (sender as CheckBox).Tag as TransContragentViewModel;
             tr._mskTbInput.Text = null;
@@ -55,7 +62,11 @@ namespace WpfMoneyTransfer.ViewModelы
         {
             e.CanExecute = true;
         }
-        public static void LostFocusButtonSearch_Executed(object sender, ExecutedRoutedEventArgs e) // команда для вывода результата поиска по номеру телефона 
+
+        /// <summary>
+        /// Command to output the search result by phone number
+        /// </summary>
+        public static void LostFocusButtonSearch_Executed(object sender, ExecutedRoutedEventArgs e) 
         {
             TransContragentViewModel tr = (sender as Button).Tag as TransContragentViewModel;
             tr.SpGetCardNumber1(tr._mskTbInput.Text, tr._chSign.IsChecked.Value);
@@ -70,7 +81,11 @@ namespace WpfMoneyTransfer.ViewModelы
             else
                 e.CanExecute = tr._mskTbInput.Text.Length == 19;
         }
-        public void SpGetCardNumber1(string number, bool isCard) // хранимая процедура, предназначенная для поиска и вывода номера карты по номеру телефона
+
+        /// <summary>
+        /// Stored procedure designed to search for and output a card number by phone number
+        /// </summary>
+        public void SpGetCardNumber1(string number, bool isCard)
         {
             string sqlTransCardNumber = "SP_GetCardNumder1";
             using (SqlConnection connection = new SqlConnection(connectionString))

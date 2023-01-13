@@ -11,7 +11,7 @@ using System.Configuration;
 namespace WpfMoneyTransfer.Views
 {
     /// <summary>
-    /// Main form for adding, deleting and editing clients
+    /// Class for adding, deleting and editing clients
     /// </summary>
     public class MainWindowClientsViewModel
     {

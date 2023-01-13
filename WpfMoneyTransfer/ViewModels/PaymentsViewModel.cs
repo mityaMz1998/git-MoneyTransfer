@@ -9,7 +9,7 @@ using WpfMoneyTransfer.Views;
 namespace WpfMoneyTransfer.ViewModelы
 {
     /// <summary>
-    /// Form for making payments
+    /// Class for making payments
     /// </summary>
     public class PaymentsViewModel : INotifyPropertyChanged
     {
