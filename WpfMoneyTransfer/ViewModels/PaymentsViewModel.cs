@@ -8,6 +8,9 @@ using WpfMoneyTransfer.Views;
 
 namespace WpfMoneyTransfer.ViewModelы
 {
+    /// <summary>
+    /// Form for making payments
+    /// </summary>
     public class PaymentsViewModel : INotifyPropertyChanged
     {
         public static Payments payments;
@@ -21,7 +24,11 @@ namespace WpfMoneyTransfer.ViewModelы
             AcceptPayment = new RoutedCommand("AcceptPayment", typeof(Payments));
             CancelPayment = new RoutedCommand("CancelPayment", typeof(Payments));
         }
-        public static void AcceptPayment_Executed(object sender, ExecutedRoutedEventArgs e) // команда для выполнения платежа
+
+        /// <summary>
+        /// Сommand to make the payment
+        /// </summary>
+        public static void AcceptPayment_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Payments p = sender as Payments;
             SpTransCardNumber(p.send.cardNumber, p.recieve.cardNumber, decimal.Parse(payments.txtSumTransfer.Text));
@@ -31,6 +38,10 @@ namespace WpfMoneyTransfer.ViewModelы
         {
             e.CanExecute = payments.send.cardFound && payments.recieve.cardFound && payments.txtSumTransfer.Text.Length > 0;
         }
+
+        /// <summary>
+        /// Сommand to clearing elements in the form
+        /// </summary>
         private static void ClearElements()
         {
             payments.checkFrom.IsChecked = null;
@@ -38,7 +49,11 @@ namespace WpfMoneyTransfer.ViewModelы
             payments.txtToCard.Clear();
             payments.txtSumTransfer.Clear();            
         }
-        public static void SpTransCardNumber(long from, long to, decimal sum) // хранимая процедура, предназначенная для выполнения перевода денежных средств
+
+        /// <summary>
+        /// Stored procedure designed to perform a money transfer
+        /// </summary>
+        public static void SpTransCardNumber(long from, long to, decimal sum)
         {
             string sqlTransCardNumber = "SP_TransCardNumber";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -67,7 +82,11 @@ namespace WpfMoneyTransfer.ViewModelы
                 var result = command.ExecuteNonQuery();
             }
         }
-        public static void CancelPayment_Executed(object sender, ExecutedRoutedEventArgs e) // команда для отмены (закрытия формы)
+
+        /// <summary>
+        /// Command to cancel (close the form)
+        /// </summary>
+        public static void CancelPayment_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             (sender as Payments).Close();
         }
